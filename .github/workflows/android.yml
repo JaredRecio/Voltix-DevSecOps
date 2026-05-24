@@ -12,10 +12,10 @@ jobs:
 
     steps:
       - name: Checkout código
-        uses: actions/checkout@v3
+        uses: actions/checkout@v4
 
       - name: Configurar JDK 17
-        uses: actions/setup-java@v3
+        uses: actions/setup-java@v4
         with:
           java-version: '17'
           distribution: 'temurin'
@@ -24,13 +24,13 @@ jobs:
         run: chmod +x gradlew
 
       - name: Compilar proyecto
-        run: ./gradlew assembleDebug
+        run: ./gradlew assembleDebug --no-daemon
 
       - name: Ejecutar pruebas unitarias
-        run: ./gradlew test
+        run: ./gradlew test --no-daemon
 
       - name: Subir reporte de pruebas
-        uses: actions/upload-artifact@v3
+        uses: actions/upload-artifact@v4
         with:
           name: reporte-pruebas
           path: app/build/reports/tests/
