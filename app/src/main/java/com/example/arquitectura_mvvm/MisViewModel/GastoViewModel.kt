@@ -10,10 +10,17 @@ import kotlinx.coroutines.launch
 class GastoViewModel(private val repositorio: GastoRepository) : ViewModel() {
     val gastos: Flow<List<Gasto>> = repositorio.gastos
 
-    fun agregar(concepto: String, monto: String, pagadoPor: String) {
+    fun agregar(concepto: String, monto: String, pagadoPor: String, grupoId: Int = 0) {
         val montoDouble = monto.toDoubleOrNull() ?: return
         viewModelScope.launch {
-            repositorio.insertar(Gasto(concepto = concepto, monto = montoDouble, pagadoPor = pagadoPor))
+            repositorio.insertar(
+                Gasto(
+                    concepto = concepto,
+                    monto = montoDouble,
+                    pagadoPor = pagadoPor,
+                    grupoId = grupoId
+                )
+            )
         }
     }
 

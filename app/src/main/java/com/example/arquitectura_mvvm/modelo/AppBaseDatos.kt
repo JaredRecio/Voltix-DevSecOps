@@ -3,14 +3,17 @@ package com.example.arquitectura_mvvm.modelo
 import android.content.Context
 import androidx.room.*
 import com.example.arquitectura_mvvm.modelo.dao.GastoDao
+import com.example.arquitectura_mvvm.modelo.dao.GrupoDao
 import com.example.arquitectura_mvvm.modelo.dao.ProductoDao
 import com.example.arquitectura_mvvm.modelo.entity.Gasto
+import com.example.arquitectura_mvvm.modelo.entity.Grupo
 import com.example.arquitectura_mvvm.modelo.entity.Producto
 
-@Database(entities = [Producto::class, Gasto::class], version = 2)
+@Database(entities = [Producto::class, Gasto::class, Grupo::class], version = 3)
 abstract class AppBaseDatos : RoomDatabase() {
     abstract fun productoDao(): ProductoDao
     abstract fun gastoDao(): GastoDao
+    abstract fun grupoDao(): GrupoDao
 
     companion object {
         @Volatile private var INSTANCE: AppBaseDatos? = null
