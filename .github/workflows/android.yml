@@ -1,0 +1,36 @@
+name: Android CI/CD - Voltix
+
+on:
+  push:
+    branches: [ "master" ]
+  pull_request:
+    branches: [ "master" ]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout código
+        uses: actions/checkout@v4
+
+      - name: Configurar JDK 17
+        uses: actions/setup-java@v4
+        with:
+          java-version: '17'
+          distribution: 'temurin'
+
+      - name: Dar permisos a Gradle
+        run: chmod +x gradlew
+
+      - name: Compilar proyecto
+        run: ./gradlew assembleDebug --no-daemon
+
+      - name: Ejecutar pruebas unitarias
+        run: ./gradlew test --no-daemon
+
+      - name: Subir reporte de pruebas
+        uses: actions/upload-artifact@v4
+        with:
+          name: reporte-pruebas
+          path: app/build/reports/tests/
